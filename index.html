@@ -1,18 +1,29 @@
+</html>
 <!DOCTYPE html>
-<html>
-  <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <title>Lichess Study Exporter</title>
-      <script type="module" src="https://pyscript.net/snapshots/2023.09.1.RC2/core.js"></script>
-  </head>
-  <body>
-        <div>
-            <p>Enter a lichess Study ID (to be found in the URL) and find mistakes!</p>
-            <p>The study must be either public or accessible for all with link.</p>
-        </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lichess Study Exporter</title>
+    <script type="module" src="https://pyscript.net/snapshots/2023.09.1.RC2/core.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Chess Study Extractor</h1>
+    </header>
+
+    <main>
+        <p>Welcome to the Lichess Study Extractor app! Enter a Lichess study ID below to extract critical chess positions to a PGN file.</p>
+        <p>The study must be either public or accessible for all with link.</p>
+        <p>Example: For Vasif Durarbayli's "Game of the Week" the study ID is <a href="https://lichess.org/study/GWPZqTsb">GWPZqTsb</a></p>
+
+
+
         <div class="py-box">
-            <input id="study-id-input" data-cip-id="study-id-input">
+            <label for="study-id-input">Lichess Study ID:</label>
+            <input type="text" id="study-id-input" placeholder="GWPZqTsb" />
             <button py-click="download_mistake_pgn" id="new-task-btn" class="py-button">
                 Download PGN!
             </button>
@@ -21,5 +32,13 @@
             <a>id="download-link"</a>
         </div>
         <script type="py" src="./main.py" config="./pyscript.toml"></script>
-  </body>
+
+        <p id="status"></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Paul Westenthanner | <a href="https://westenthanner.dev">About</a> | <a href="https://github.com/PaulWestenthanner/lichess_study_exporter">GitHub</a></p>
+    </footer>
+
+</body>
 </html>

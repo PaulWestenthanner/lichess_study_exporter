@@ -36,7 +36,9 @@ def export_mistakes(analysed_game, exporter):
         if not previous_move:
             previous_move = move
             continue
-        if MISTAKE_REGEX.search(move.comment):
+
+        is_nag_blunder = bool(len(move.nags.intersection(set([2,4]))))
+        if MISTAKE_REGEX.search(move.comment) or is_nag_blunder:
             export_game = chess.pgn.Game()
             export_game.headers = copy.deepcopy(analysed_game.headers)
             export_game.headers["FEN"] = copy.deepcopy(previous_move.board().fen())
@@ -47,15 +49,11 @@ def export_mistakes(analysed_game, exporter):
 
 
 async def download_mistake_pgn(*args, **kws):
-  print("got here")
   study_field = document.querySelector("#study-id-input")
   study_id = study_field.value
-  print("using study", study_id)
   exporter = chess.pgn.StringExporter()
   study_text = await get_study_pgn(study_id)
   input_pgn = io.StringIO(study_text)
-  print("got games")
-  print(study_text)
 
   has_games = True
   while has_games:
@@ -64,7 +62,6 @@ async def download_mistake_pgn(*args, **kws):
           has_games = False
       else:
           export_mistakes(current_game, exporter)
-  print("got exporter ready")
   # download_link = document.querySelector("#download-link")
   download_link = document.createElement("a")
   download_link.href = "data:application/octet-stream,"+urllib.parse.quote(str(exporter), safe='~()*!\'')
